@@ -6,7 +6,7 @@
 /*   By: sacharai <sacharai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 05:17:02 by sacharai          #+#    #+#             */
-/*   Updated: 2023/12/13 03:43:59 by sacharai         ###   ########.fr       */
+/*   Updated: 2023/12/13 23:36:12 by sacharai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct		s_philo
 {
   pthread_t		thread;
   int			id;
+  int			flag;
   long			last_time;
   int			eating_counter;
   t_fork		*l_fork;

@@ -6,7 +6,7 @@
 /*   By: sacharai <sacharai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 05:17:02 by sacharai          #+#    #+#             */
-/*   Updated: 2023/12/13 23:36:12 by sacharai         ###   ########.fr       */
+/*   Updated: 2023/12/16 22:22:59 by sacharai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ typedef	struct s_data
 int	ft_atoi(const char *str);
 int	check_args(char **av);
 int parse_fill(int ac, char **av, t_data *data);
+int	data_init(t_data *data);
 
 #endif

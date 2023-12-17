@@ -6,7 +6,7 @@
 /*   By: sacharai <sacharai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:53:39 by sacharai          #+#    #+#             */
-/*   Updated: 2023/12/12 08:35:34 by sacharai         ###   ########.fr       */
+/*   Updated: 2023/12/16 22:24:35 by sacharai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	main(int ac, char **av)
 	}
 	if (parse_fill(ac, av, &data))
 		return (1);
+	if (data_init(&data))
+		return(1);
 	return (0);
 
 }

@@ -6,7 +6,7 @@
 /*   By: sacharai <sacharai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:22:15 by sacharai          #+#    #+#             */
-/*   Updated: 2023/12/15 09:19:13 by sacharai         ###   ########.fr       */
+/*   Updated: 2023/12/16 22:22:48 by sacharai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	philo_init(t_data *data)
 	}
 	
 }
+
 int	data_init(t_data *data)
 {
 	int	i;
@@ -66,5 +67,5 @@ int	data_init(t_data *data)
 	fork_init(data);
 	philo_init(data);
 	
-		
+	return (0);
 }

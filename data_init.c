@@ -6,66 +6,55 @@
 /*   By: sacharai <sacharai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:22:15 by sacharai          #+#    #+#             */
-/*   Updated: 2023/12/16 22:22:48 by sacharai         ###   ########.fr       */
+/*   Updated: 2024/01/09 18:57:21 by sacharai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	fork_init(t_data *data)
+unsigned long	get_time(void)
 {
-	int	i;
+	struct timeval	tv;
 
-	i = 0;
-	while (i < data->philo_nbr)
-	{
-		data->forks[i].fork_id = i;
-		pthread_mutex_init(&data->forks[i].fork, NULL);
-		i++;
-	}
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-void	get_forks(t_philo *philo, int philo_p)
+void	philo_init(t_philo *philo, t_data *data)
 {
-	int	max_nbr;
-
-	max_nbr = philo->data->philo_nbr;
-	philo->l_fork = &philo->data->forks[(philo_p + 1) % 5]; // possiple problem
-	philo->r_fork = &philo->data->forks[philo_p];
-}
-
-void	philo_init(t_data *data)
-{
-	t_philo	*philo;
 	int		i;
 
 	i = 0;
 	while (i < data->philo_nbr)
 	{
-		philo = data->philos + i;
-		philo->id = i + 1;
-		philo->eating_counter = 0;
-		philo->flag = 0;
-		philo->data = data;
-		
-		get_forks(philo, i);
+		philo[i].id = i;
+		philo[i].data = data;
+		philo[i].eating_counter = 0;
+		philo[i].last_time = 0;
+		pthread_mutex_init(&philo[i].fork, NULL);
+		i++;
 	}
-	
 }
 
-int	data_init(t_data *data)
+int	data_init(t_philo *philos, t_data *data)
 {
 	int	i;
 
 	i = 0;
-	data->philos = malloc(sizeof(t_philo) * data->philo_nbr);
-	if(!data->philos)
-		return (1);
-	data->forks = malloc(sizeof(t_fork) * data->philo_nbr);
-	if(!data->forks)
-		return (1);
-	fork_init(data);
-	philo_init(data);
-	
+	data->philos = philos;
+	data->start_time = get_time();
+	data->nbr_philos_meal = 0;
+	pthread_mutex_init(&data->last_eat_lock, NULL);
+	pthread_mutex_init(&data->eat_counter_lock, NULL);
+	philo_init(philos, data);
+	while (i < data->philo_nbr)
+	{
+		if (pthread_create(&philos[i].thread,
+				NULL, routine, (void *)&philos[i]))
+			return (1);
+		if (pthread_detach(philos[i].thread))
+			return (1);
+		i++;
+	}
 	return (0);
 }
